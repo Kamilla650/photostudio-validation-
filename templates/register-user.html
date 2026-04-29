@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация пользователя</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Регистрация пользователя</h1>
+        <form id="registerForm">
+            <div class="form-group">
+                <label>Имя</label>
+                <input type="text" id="name" class="form-control" placeholder="Введите имя">
+                <small id="nameError" style="color: red;"></small>
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="email" class="form-control" placeholder="example@mail.ru">
+                <small id="emailError" style="color: red;"></small>
+            </div>
+
+            <div class="form-group">
+                <label>Телефон (для связи)</label>
+                <input type="text" id="phone" class="form-control" placeholder="+7-999-123-45-67">
+                <small id="phoneError" style="color: red;"></small>
+                <small style="color: gray;">Форматы: +7-999-123-45-67 | +7 999 123 45 67 | 8-999-123-4567</small>
+            </div>
+
+            <div class="form-group">
+                <label>ИНН (необязательно)</label>
+                <input type="text" id="inn" class="form-control" placeholder="7712345678">
+                <small id="innError" style="color: red;"></small>
+                <small style="color: gray;">10 или 12 цифр</small>
+            </div>
+
+            <div class="form-group">
+                <label>Пароль</label>
+                <input type="password" id="password" class="form-control" placeholder="Не менее 6 символов">
+                <small id="passwordError" style="color: red;"></small>
+            </div>
+
+            <button type="submit" class="btn">Зарегистрироваться</button>
+        </form>
+    </div>
+
+    <script>
+        // Валидация email
+        document.getElementById('email').addEventListener('blur', async function() {
+            const email = this.value;
+            if (!email) return;
+            const response = await fetch('/api/validate-email', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({email: email})
+            });
+            const data = await response.json();
+            document.getElementById('emailError').textContent = data.message;
+            document.getElementById('emailError').style.color = data.valid ? 'green' : 'red';
+        });
+
+        // Валидация телефона
+        document.getElementById('phone').addEventListener('blur', async function() {
+            const phone = this.value;
+            if (!phone) {
+                document.getElementById('phoneError').textContent = '';
+                return;
+            }
+            const response = await fetch('/api/validate-phone', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({phone: phone})
+            });
+            const data = await response.json();
+            document.getElementById('phoneError').textContent = data.message;
+            document.getElementById('phoneError').style.color = data.valid ? 'green' : 'red';
+        });
+
+        // Валидация ИНН
+        document.getElementById('inn').addEventListener('blur', async function() {
+            const inn = this.value;
+            if (!inn) {
+                document.getElementById('innError').textContent = '';
+                return;
+            }
+            const response = await fetch('/api/validate-inn', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({inn: inn})
+            });
+            const data = await response.json();
+            document.getElementById('innError').textContent = data.message;
+            document.getElementById('innError').style.color = data.valid ? 'green' : 'red';
+        });
+
+        // Валидация пароля
+        document.getElementById('password').addEventListener('blur', async function() {
+            const password = this.value;
+            const response = await fetch('/api/validate-password', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({password: password, is_admin: false})
+            });
+            const data = await response.json();
+            document.getElementById('passwordError').textContent = data.message;
+            document.getElementById('passwordError').style.color = data.valid ? 'green' : 'red';
+        });
+
+        // Отправка формы
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const inn = document.getElementById('inn').value;
+            const password = document.getElementById('password').value;
+
+            const response = await fetch('/api/register-user', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({name, email, phone, inn, password})
+            });
+            const result = await response.json();
+            alert(result.message);
+            if (result.success) {
+                window.location.href = '/user-main';
+            }
+        });
+    </script>
+</body>
+</html>

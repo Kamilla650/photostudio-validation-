@@ -1,0 +1,715 @@
+/* ========== ОБЩИЕ СТИЛИ ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f5f7fa;
+    color: #1e2a3e;
+    line-height: 1.5;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ========== ТЁМНАЯ ТЕМА ========== */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+body.dark-mode .container,
+body.dark-mode .photo-card,
+body.dark-mode .studio-card,
+body.dark-mode .modal-content {
+    background: #1e2a32;
+    color: #f0f0f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .container {
+    background: #1e2a32;
+}
+
+body.dark-mode th {
+    background: #0f1a1f;
+    color: #ddd;
+}
+
+body.dark-mode td {
+    border-bottom-color: #2c3e3f;
+}
+
+body.dark-mode .form-control {
+    background: #2d3e42;
+    border-color: #4b6a6f;
+    color: white;
+}
+
+body.dark-mode .btn-secondary {
+    background: #3a5a5f;
+}
+
+body.dark-mode .btn-secondary:hover {
+    background: #2a4a4f;
+}
+
+body.dark-mode .studio-card {
+    border-color: #3a5a5f;
+}
+
+body.dark-mode .status-pending {
+    background: #3a2a00;
+    color: #ffb74d;
+}
+
+body.dark-mode .status-approved {
+    background: #1b3a1f;
+    color: #81c784;
+}
+
+body.dark-mode .status-rejected {
+    background: #3a1a1a;
+    color: #ef9a9a;
+}
+
+body.dark-mode .nav-bottom {
+    border-top-color: #3a5a5f;
+}
+
+body.dark-mode .modal-footer {
+    border-top-color: #3a5a5f;
+}
+
+body.dark-mode .filter-btn.btn-secondary {
+    background: #3a5a5f;
+}
+
+/* ========== КОНТЕЙНЕР ========== */
+.container {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+    margin: 20px auto;
+}
+
+/* ========== ЗАГОЛОВКИ ========== */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+}
+
+h1 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 32px;
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4 {
+    color: #e0e0e0;
+}
+
+h2 {
+    color: #3498db;
+    margin-bottom: 15px;
+    font-size: 24px;
+}
+
+h3 {
+    color: #2c3e50;
+    margin: 25px 0 15px;
+    font-size: 20px;
+}
+
+/* ========== КНОПКИ ========== */
+.btn {
+    display: inline-block;
+    background: #3498db;
+    color: white;
+    padding: 12px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    margin: 8px 5px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-success {
+    background: #2ecc71;
+}
+
+.btn-success:hover {
+    background: #27ae60;
+}
+
+.btn-danger {
+    background: #e74c3c;
+}
+
+.btn-danger:hover {
+    background: #c0392b;
+}
+
+.btn-secondary {
+    background: #95a5a6;
+}
+
+.btn-secondary:hover {
+    background: #7f8c8d;
+}
+
+/* ========== ФОРМЫ ========== */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+body.dark-mode .form-group label {
+    color: #e0e0e0;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: all 0.3s;
+}
+
+.form-control:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+select.form-control {
+    cursor: pointer;
+}
+
+textarea.form-control {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* ========== ГАЛЕРЕЯ ========== */
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.gallery-item {
+    width: 260px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 12px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+body.dark-mode .gallery-item {
+    background: #1e2a32;
+}
+
+.gallery-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.gallery-item h4 {
+    padding: 12px;
+    font-size: 16px;
+}
+
+/* ========== ФИЛЬТРЫ ========== */
+.filter-buttons {
+    text-align: center;
+    margin: 25px 0;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.filter-btn {
+    padding: 10px 24px !important;
+}
+
+/* ========== СТУДИИ ========== */
+.studio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
+    margin: 25px 0;
+}
+
+.studio-card {
+    padding: 20px;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid #eee;
+    transition: all 0.3s ease;
+}
+
+.studio-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
+.studio-card h4 {
+    color: #2c3e50;
+    margin-bottom: 12px;
+    font-size: 18px;
+}
+
+.studio-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin: 10px 0;
+}
+
+.studio-card label {
+    display: block;
+    margin-top: 12px;
+    cursor: pointer;
+}
+
+.studio-card input[type="radio"] {
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+/* ========== СТАТУСЫ ========== */
+.status {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.status-pending {
+    background: #fff3e0;
+    color: #ff9800;
+}
+
+.status-approved {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.status-rejected {
+    background: #ffebee;
+    color: #c62828;
+}
+
+/* ========== ТАБЛИЦЫ ========== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+th,
+td {
+    padding: 14px;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+th {
+    background: #f8f9fa;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+tr:hover {
+    background: #fafafa;
+}
+
+body.dark-mode tr:hover {
+    background: #2a3a3f;
+}
+
+/* ========== УВЕДОМЛЕНИЯ ========== */
+.alert-success {
+    background: #e8f5e9;
+    color: #2e7d32;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 30px 0;
+    border-left: 5px solid #4caf50;
+}
+
+body.dark-mode .alert-success {
+    background: #1b3a1f;
+    color: #81c784;
+}
+
+/* ========== НАВИГАЦИЯ ВНИЗУ ========== */
+.nav-bottom {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+    text-align: center;
+}
+
+/* ========== АКТИВНОЕ МЕНЮ ========== */
+.active-menu-item {
+    background: #2ecc71 !important;
+    box-shadow: 0 2px 8px rgba(46, 204, 113, 0.4);
+}
+
+/* ========== ПРИВЕТСТВИЕ ========== */
+.greeting-block {
+    animation: slideDown 0.4s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========== МОДАЛЬНЫЕ ОКНА ========== */
+.custom-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    animation: fadeIn 0.2s ease;
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+}
+
+.modal-content {
+    position: relative;
+    background: white;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    animation: slideUp 0.2s ease;
+}
+
+.modal-header {
+    padding: 15px 20px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: white;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+    line-height: 1;
+    transition: transform 0.2s;
+}
+
+.modal-close:hover {
+    transform: scale(1.1);
+}
+
+.modal-body {
+    padding: 25px 20px;
+}
+
+.modal-footer {
+    padding: 15px 20px;
+    text-align: center;
+    border-top: 1px solid #eee;
+}
+
+.modal-footer .btn {
+    margin: 0;
+    padding: 10px 30px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* ========== КНОПКА ПЕРЕКЛЮЧЕНИЯ ТЕМЫ ========== */
+.theme-toggle-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 40px;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    background: #2980b9;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* ========== АНИМАЦИИ ========== */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.photo-card,
+.gallery-item,
+.studio-card {
+    animation: fadeInScale 0.3s ease;
+}
+
+/* ========== СКРОЛЛ ========== */
+html {
+    scroll-behavior: smooth;
+}
+
+/* ========== ОШИБКИ В ФОРМАХ ========== */
+input.error,
+select.error,
+textarea.error {
+    border-color: #e74c3c !important;
+}
+
+/* ========== АДАПТИВНОСТЬ ========== */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    th, td {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .studio-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-item {
+        width: calc(50% - 10px);
+    }
+
+    .theme-toggle-btn {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery-item {
+        width: 100%;
+    }
+
+    .filter-buttons {
+        gap: 8px;
+    }
+
+    .filter-btn {
+        padding: 8px 16px !important;
+        font-size: 13px;
+    }
+
+    th, td {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+/* ========== СТУДИИ ========== */
+.studio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
+    margin: 25px 0;
+}
+
+.studio-card {
+    padding: 20px;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid #eee;
+    transition: all 0.3s ease;
+}
+
+.studio-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
+.studio-card h4 {
+    color: #2c3e50;
+    margin-bottom: 12px;
+    font-size: 18px;
+}
+
+.studio-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin: 10px 0;
+}
+
+.studio-card label {
+    display: block;
+    margin-top: 12px;
+    cursor: pointer;
+}
+
+.studio-card input[type="radio"] {
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+/* ========== ГАЛЕРЕЯ ========== */
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.gallery-item {
+    width: 260px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 12px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.gallery-item:hover {
+    transform: translateY(-8px);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.gallery-item h4 {
+    padding: 12px;
+}

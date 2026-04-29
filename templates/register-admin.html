@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация администратора</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Регистрация администратора</h1>
+        <form id="registerAdminForm">
+            <div class="form-group">
+                <label>Имя</label>
+                <input type="text" id="name" class="form-control" placeholder="Введите имя">
+                <small id="nameError" style="color: red;"></small>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="email" class="form-control" placeholder="admin@studio.com">
+                <small id="emailError" style="color: red;"></small>
+            </div>
+            <div class="form-group">
+                <label>Пароль</label>
+                <input type="password" id="password" class="form-control" placeholder="Не менее 8 символов">
+                <small id="passwordError" style="color: red;"></small>
+            </div>
+            <div class="form-group">
+                <label>Код доступа</label>
+                <input type="password" id="code" class="form-control" placeholder="Код администратора">
+                <small style="color: gray;">Подсказка: ADMIN123</small>
+                <small id="codeError" style="color: red; display: block;"></small>
+            </div>
+            <button type="submit" class="btn">Зарегистрироваться</button>
+        </form>
+    </div>
+
+    <script>
+        // Валидация email
+        document.getElementById('email').addEventListener('blur', async function() {
+            const response = await fetch('/api/validate-email', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({email: this.value})
+            });
+            const result = await response.json();
+            document.getElementById('emailError').textContent = result.message;
+            document.getElementById('emailError').style.color = result.valid ? 'green' : 'red';
+        });
+
+        // Валидация пароля (админ - минимум 8 символов)
+        document.getElementById('password').addEventListener('blur', async function() {
+            const response = await fetch('/api/validate-password', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({password: this.value, is_admin: true})
+            });
+            const result = await response.json();
+            document.getElementById('passwordError').textContent = result.message;
+            document.getElementById('passwordError').style.color = result.valid ? 'green' : 'red';
+        });
+
+        // Отправка формы
+        document.getElementById('registerAdminForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const code = document.getElementById('code').value;
+
+            const response = await fetch('/api/register-admin', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({name, email, password, code})
+            });
+            const result = await response.json();
+            alert(result.message);
+            if (result.success) {
+                window.location.href = '/admin-requests';
+            }
+        });
+    </script>
+</body>
+</html>

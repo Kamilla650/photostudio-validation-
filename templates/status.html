@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Статус заявок</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Статус ваших заявок</h1>
+        </header>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Тема</th>
+                    <th>Дата</th>
+                    <th>Время</th>
+                    <th>Студия</th>
+                    <th>Статус</th>
+                </tr>
+            </thead>
+            <tbody id="requestsTable">
+                <!-- Данные будут загружены с сервера -->
+            </tbody>
+        </table>
+
+        <div class="nav-bottom">
+            <a href="/user-main" class="btn btn-secondary">Назад в кабинет</a>
+        </div>
+    </div>
+
+    <script>
+        async function loadRequests() {
+            const response = await fetch('/api/get-user-requests');
+            const requests = await response.json();
+            const tbody = document.getElementById('requestsTable');
+
+            if (requests.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align: center;">У вас пока нет заявок</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = '';
+            for (let req of requests) {
+                let statusClass = 'status-pending';
+                let statusText = 'На рассмотрении';
+                if (req.status === 'approved') {
+                    statusClass = 'status-approved';
+                    statusText = 'Одобрено';
+                } else if (req.status === 'rejected') {
+                    statusClass = 'status-rejected';
+                    statusText = 'Отказано';
+                }
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${req.theme}</td>
+                        <td>${req.date}</td>
+                        <td>${req.time}</td>
+                        <td>Студия ${req.studio}</td>
+                        <td><span class="status ${statusClass}">${statusText}</span></td>
+                    </tr>
+                `;
+            }
+        }
+
+        loadRequests();
+    </script>
+</body>
+</html>

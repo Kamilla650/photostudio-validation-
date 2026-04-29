@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Запись на фотосессию</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Запись на фотосессию</h1>
+            <p>Выберите параметры для фотосессии</p>
+        </header>
+
+        <form id="bookingForm">
+            <div class="form-group">
+                <label>Тема фотосессии</label>
+                <select id="theme" class="form-control" required>
+                    <option value="">Выберите тему</option>
+                    <option value="Свадьба">Свадьба</option>
+                    <option value="Портрет">Портрет</option>
+                    <option value="Семейная">Семейная</option>
+                    <option value="Love Story">Love Story</option>
+                    <option value="Бизнес-портрет">Бизнес-портрет</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Дата</label>
+                <input type="date" id="date" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label>Время</label>
+                <select id="time" class="form-control" required>
+                    <option value="">Выберите время</option>
+                    <option value="10:00">10:00</option>
+                    <option value="12:00">12:00</option>
+                    <option value="14:00">14:00</option>
+                    <option value="16:00">16:00</option>
+                    <option value="18:00">18:00</option>
+                </select>
+            </div>
+
+            <h3>Выберите студию</h3>
+            <div class="studio-grid">
+                <div class="studio-card">
+                    <h4>Студия 1: Классическая</h4>
+                    <img src="https://leonastage.ru/wp-content/uploads/2025/02/IMG_9089.jpg" alt="Студия 1">
+                    <p><strong>Особенности:</strong> Белый фон, профессиональный свет</p>
+                    <p><strong>Статус:</strong> <span style="color:#27ae60;">Свободна</span></p>
+                    <label><input type="radio" name="studio" value="1" required> Выбрать эту студию</label>
+                </div>
+
+                <div class="studio-card">
+                    <h4>Студия 2: Лофт</h4>
+                    <img src="https://www.studiorent.ru/upload_data/3387/upldhnqvHE.jpg.513x347.jpg" alt="Студия 2">
+                    <p><strong>Особенности:</strong> Кирпичные стены, индустриальный стиль</p>
+                    <p><strong>Статус:</strong> <span style="color:#27ae60;">Свободна</span></p>
+                    <label><input type="radio" name="studio" value="2"> Выбрать эту студию</label>
+                </div>
+
+                <div class="studio-card">
+                    <h4>Студия 3: Современная</h4>
+                    <img src="https://img.freepik.com/premium-photo/white-setup-photographer-modern-photo-studio-room-with-professional-light-equipment_100800-7324.jpg" alt="Студия 3">
+                    <p><strong>Особенности:</strong> Стекло, хром, минимализм</p>
+                    <p><strong>Статус:</strong> <span style="color:#e74c3c;">Занята до 14:00</span></p>
+                    <label><input type="radio" name="studio" value="3"> Выбрать эту студию</label>
+                </div>
+
+                <div class="studio-card">
+                    <h4>Студия 4: Природная</h4>
+                    <img src="https://cdn.vseinstrumenti.ru/images/goods/stroitelnye-materialy/otdelochnye-materialy/5155735/560x504/65383969.jpg" alt="Студия 4">
+                    <p><strong>Особенности:</strong> Растения, натуральный свет</p>
+                    <p><strong>Статус:</strong> <span style="color:#27ae60;">Свободна</span></p>
+                    <label><input type="radio" name="studio" value="4"> Выбрать эту студию</label>
+                </div>
+
+                <div class="studio-card">
+                    <h4>Студия 5: Винтажная</h4>
+                    <img src="https://avatars.mds.yandex.net/get-altay/11395962/2a0000018dd68e35bfef19f935540e01ff30/L_height" alt="Студия 5">
+                    <p><strong>Особенности:</strong> Антикварная мебель, теплый свет</p>
+                    <p><strong>Статус:</strong> <span style="color:#27ae60;">Свободна</span></p>
+                    <label><input type="radio" name="studio" value="5"> Выбрать эту студию</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Комментарий фотографу</label>
+                <textarea id="comment" class="form-control" placeholder="Ваши пожелания и особые требования"></textarea>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <button type="submit" class="btn btn-success">Отправить заявку</button>
+            </div>
+        </form>
+
+        <div class="nav-bottom">
+            <a href="/status" class="btn btn-secondary">Мои заявки</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const theme = document.getElementById('theme').value;
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            const selectedStudio = document.querySelector('input[name="studio"]:checked');
+            const comment = document.getElementById('comment').value;
+
+            if (!theme || !date || !time || !selectedStudio) {
+                alert('Пожалуйста, заполните все обязательные поля');
+                return;
+            }
+
+            const response = await fetch('/api/create-booking', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    theme: theme,
+                    date: date,
+                    time: time,
+                    studio: selectedStudio.value,
+                    comment: comment
+                })
+            });
+            const result = await response.json();
+            alert(result.message);
+            if (result.success) {
+                window.location.href = '/status';
+            }
+        });
+    </script>
+<a href="/search" class="btn btn-secondary">🔍 Поиск в тексте</a>
+</body>
+</html>

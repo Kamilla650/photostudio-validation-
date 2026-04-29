@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Поиск в тексте</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Поиск данных в тексте</h1>
+        <p>Регулярные выражения: email, телефоны, даты, цены, ссылки, хэштеги, IP-адреса</p>
+
+        <div class="form-group">
+            <label>Введите текст для анализа:</label>
+            <textarea id="searchText" class="form-control" rows="8" placeholder="Пример:
+Мои контакты: ivan@mail.ru и petr@gmail.com
+Телефон: +7-999-123-45-67
+Встреча 15.05.2025
+Ноутбук 50000 руб
+Сайт: https://python.org
+Хэштег: #python
+IP: 192.168.1.1"></textarea>
+        </div>
+
+        <button id="searchBtn" class="btn btn-success">🔍 Найти всё</button>
+
+        <div id="results" style="margin-top: 30px;"></div>
+
+        <div class="nav-bottom">
+            <a href="/user-main" class="btn btn-secondary">← Назад</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('searchBtn').addEventListener('click', async () => {
+            const text = document.getElementById('searchText').value;
+            if (!text) {
+                alert('Введите текст для поиска');
+                return;
+            }
+
+            const response = await fetch('/api/search-text', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({text: text})
+            });
+            const data = await response.json();
+
+            document.getElementById('results').innerHTML = `
+                <div class="alert-success" style="text-align: left;">
+                    <h3>📊 Результаты поиска:</h3>
+                    <p>📧 <strong>Email:</strong> ${data.emails.join(', ') || 'не найдено'}</p>
+                    <p>📞 <strong>Телефоны:</strong> ${data.phones.join(', ') || 'не найдено'}</p>
+                    <p>📅 <strong>Даты:</strong> ${data.dates.join(', ') || 'не найдено'}</p>
+                    <p>💰 <strong>Цены:</strong> ${data.prices.join(', ') || 'не найдено'}</p>
+                    <p>🔗 <strong>Ссылки:</strong> ${data.urls.join(', ') || 'не найдено'}</p>
+                    <p># <strong>Хэштеги:</strong> ${data.hashtags.join(', ') || 'не найдено'}</p>
+                    <p>🌐 <strong>IP-адреса:</strong> ${data.ips.join(', ') || 'не найдено'}</p>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>

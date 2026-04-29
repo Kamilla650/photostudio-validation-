@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Админ панель - Заявки</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📋 Все заявки на фотосессии</h1>
+            <p id="requestsCount"></p>
+        </header>
+
+        <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Пользователь</th>
+                        <th>Тема</th>
+                        <th>Дата</th>
+                        <th>Время</th>
+                        <th>Студия</th>
+                        <th>Статус</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody id="adminTable">
+                    <tr><td colspan="8" style="text-align: center;">Загрузка...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="nav-bottom">
+            <a href="/login" class="btn btn-secondary">🚪 Выйти</a>
+        </div>
+    </div>
+
+    <script>
+        async function loadRequests() {
+            const response = await fetch('/api/get-all-requests');
+            const requests = await response.json();
+            const tbody = document.getElementById('adminTable');
+            const countSpan = document.getElementById('requestsCount');
+
+            countSpan.textContent = `Всего заявок: ${requests.length}`;
+
+            if (requests.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">Нет заявок</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = '';
+            for (let req of requests) {
+                let statusText = '';
+                let statusClass = '';
+                if (req.status === 'approved') {
+                    statusText = 'Одобрено';
+                    statusClass = 'status-approved';
+                } else if (req.status === 'rejected') {
+                    statusText = 'Отказано';
+                    statusClass = 'status-rejected';
+                } else {
+                    statusText = 'На рассмотрении';
+                    statusClass = 'status-pending';
+                }
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${req.id}</td>
+                    <td>${req.user_name}</td>
+                    <td>${req.theme}</td>
+                    <td>${req.date}</td>
+                    <td>${req.time}</td>
+                    <td>Студия ${req.studio}</td>
+                    <td><span class="status ${statusClass}">${statusText}</span></td>
+                    <td>
+                        ${req.status === 'pending' ? `
+                            <button class="btn btn-success" style="padding: 5px 10px; margin: 2px;" onclick="updateStatus(${req.id}, 'approved')">✓ Одобрить</button>
+                            <button class="btn btn-danger" style="padding: 5px 10px; margin: 2px;" onclick="updateStatus(${req.id}, 'rejected')">✗ Отказать</button>
+                        ` : '<span style="color: gray;">✓ Обработано</span>'}
+                    </td>
+                `;
+                tbody.appendChild(row);
+            }
+        }
+
+        async function updateStatus(id, status) {
+            const response = await fetch('/api/update-status', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({id: id, status: status})
+            });
+            const result = await response.json();
+            if (result.success) {
+                alert(`Заявка ${status === 'approved' ? 'одобрена' : 'отклонена'}`);
+                loadRequests();
+            }
+        }
+
+        loadRequests();
+    </script>
+</body>
+</html>
